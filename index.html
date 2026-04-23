@@ -1177,9 +1177,9 @@
         <img src="images/logo-era-3-adhesive-science.png" alt="Drytac Adhesive Science" class="hero-logo hero-logo-frame" data-frame="3" />
         <img src="images/logo-era-4-fine-art.png" alt="Drytac — The Fine Art of Finishing" class="hero-logo hero-logo-frame" data-frame="4" />
       </div>
-      <p class="hero-tagline">The Fine Art of Finishing</p>
+      <p class="hero-tagline" id="cms-hero-tagline">The Fine Art of Finishing</p>
       <h1 class="hero-headline">Fifty Years of<br><span>Innovation.</span></h1>
-      <p class="hero-sub">From a kitchen table in Toronto to a globally recognized brand — the story of Drytac is one of vision, people, and relentless craft.</p>
+      <p class="hero-sub" id="cms-hero-sub">From a kitchen table in Toronto to a globally recognized brand — the story of Drytac is one of vision, people, and relentless craft.</p>
       <div class="hero-cta">
         <a href="#story" class="btn btn-primary">Our Story</a>
         <a href="#timeline" class="btn btn-outline">View Timeline</a>
@@ -1222,14 +1222,14 @@
 
         <div class="story-text">
           <div class="section-tag reveal">50 Years in the Making</div>
-          <h2 class="reveal reveal-delay-1">The material<br>behind the work.</h2>
-          <p class="reveal reveal-delay-2">
+          <h2 class="reveal reveal-delay-1" id="cms-story-heading">The material<br>behind the work.</h2>
+          <p class="reveal reveal-delay-2" id="cms-story-p1">
             Fifty years ago, Drytac started with a simple discovery: <strong>the material behind the work could be just as important as the work itself.</strong>
           </p>
-          <p class="reveal reveal-delay-2">
+          <p class="reveal reveal-delay-2" id="cms-story-p2">
             Richard Kelley was making table mats, coasters, and plaques when a local picture framer asked to buy a roll of the dry mounting tissue he was using. One roll became two — and the numbers spoke for themselves. The future wasn't in table mats. It was in helping others mount, finish, and protect their graphics.
           </p>
-          <p class="reveal reveal-delay-3">
+          <p class="reveal reveal-delay-3" id="cms-story-p3">
             When it came time to build a brand that could stand on its own, the name came straight from the craft: <strong>Dry mounting + Tac (tacking it down) = Drytac.</strong> Registered the next morning. Still going strong 50 years later.
           </p>
         </div>
@@ -1261,14 +1261,14 @@
 
         <div class="origin-content">
           <div class="section-tag reveal">Where the Name Came From</div>
-          <h2 class="reveal reveal-delay-1">A name born from the craft.</h2>
-          <p class="reveal reveal-delay-2">
+          <h2 class="reveal reveal-delay-1" id="cms-origin-heading">A name born from the craft.</h2>
+          <p class="reveal reveal-delay-2" id="cms-origin-p1">
             Before the name Drytac existed, Richard Kelley ran a small business making table mats, coasters, and wall plaques under the name Lisle Industries — a play on his own name. To him it sounded like a large, impressive manufacturer. In reality, he was a one-person operation.
           </p>
-          <p class="reveal reveal-delay-2">
+          <p class="reveal reveal-delay-2" id="cms-origin-p2">
             One day, a local picture framer asked if he could buy a roll of the dry mounting tissue Kelley sourced from a UK supplier. A few days later, the framer ordered again. That quick repeat sale made Kelley realize he'd earned more from two rolls than he had in the previous month selling table mats.
           </p>
-          <p class="reveal reveal-delay-3">
+          <p class="reveal reveal-delay-3" id="cms-origin-p3">
             Sitting at his kitchen table late one night, faced with uncertainty about his supplier's future, he decided he needed control. Build his own brand. The name came together naturally:
           </p>
 
@@ -1682,6 +1682,36 @@
     }, { threshold: 0.15 });
 
     document.querySelectorAll('.archive-tile').forEach(el => archiveObserver.observe(el));
+  </script>
+
+  <!-- CMS content loader — populates text from content.json when edited via /admin -->
+  <script>
+    (function () {
+      var map = {
+        'cms-hero-tagline':    'hero_tagline',
+        'cms-hero-sub':        'hero_sub',
+        'cms-story-p1':        'story_p1',
+        'cms-story-p2':        'story_p2',
+        'cms-story-p3':        'story_p3',
+        'cms-origin-heading':  'origin_heading',
+        'cms-origin-p1':       'origin_p1',
+        'cms-origin-p2':       'origin_p2',
+        'cms-origin-p3':       'origin_p3'
+      };
+      fetch('/content.json')
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          Object.keys(map).forEach(function (id) {
+            var el = document.getElementById(id);
+            var val = data[map[id]];
+            if (el && val) el.textContent = val;
+          });
+          // Story heading keeps its <br> — only update if explicitly changed
+          var sh = document.getElementById('cms-story-heading');
+          if (sh && data.story_heading) sh.textContent = data.story_heading;
+        })
+        .catch(function () { /* fail silently — hardcoded content remains */ });
+    })();
   </script>
 
 </body>

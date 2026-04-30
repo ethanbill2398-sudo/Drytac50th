@@ -108,13 +108,23 @@
       text-align: center;
     }
 
-    .hero-video {
+    .hero-yt-wrap {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      overflow: hidden;
       z-index: 0;
+      pointer-events: none;
+      background: var(--dark);
+    }
+    .hero-yt-iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      /* Maintain 16:9 and always cover viewport */
+      width: max(100%, 177.78vh);
+      height: max(100%, 56.25vw);
+      border: none;
     }
 
     .hero-bg {
@@ -122,8 +132,8 @@
       inset: 0;
       z-index: 1;
       background:
-        radial-gradient(ellipse 80% 60% at 50% 50%, rgba(193,18,31,0.22) 0%, transparent 70%),
-        linear-gradient(175deg, rgba(26,10,12,0.72) 0%, rgba(17,17,17,0.78) 60%, rgba(13,13,13,0.85) 100%);
+        radial-gradient(ellipse 80% 60% at 50% 50%, rgba(193,18,31,0.18) 0%, transparent 70%),
+        linear-gradient(175deg, rgba(10,4,5,0.82) 0%, rgba(13,13,13,0.88) 60%, rgba(8,8,8,0.93) 100%);
     }
 
     /* Animated grid lines */
@@ -575,9 +585,12 @@
     .logo-era-year::before,
     .logo-era-year::after {
       content: '';
-      width: 14px;
-      height: 1px;
-      background: rgba(193,18,31,0.4);
+      display: block;
+      flex-shrink: 0;
+      width: 18px;
+      height: 2px;
+      border-radius: 0;
+      background: rgba(193,18,31,0.35);
     }
     .logo-era-title {
       font-size: 15px;
@@ -813,7 +826,7 @@
 
     .values-pillars {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 2px;
       margin-top: 72px;
       border-top: 1px solid rgba(255,255,255,0.07);
@@ -1052,6 +1065,42 @@
       color: var(--white);
     }
 
+    /* ─── Mission & Vision ───────────────────────────────────── */
+    .mission-vision {
+      background: var(--light);
+      padding: 100px 0;
+    }
+    .mv-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+    }
+    .mv-block {
+      background: var(--white);
+      border: 1px solid rgba(0,0,0,0.07);
+      border-radius: 12px;
+      padding: 48px 40px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .mv-block:hover {
+      box-shadow: 0 16px 48px rgba(193,18,31,0.1);
+      transform: translateY(-4px);
+    }
+    .mv-block .section-tag {
+      margin-bottom: 16px;
+    }
+    .mv-block h3 {
+      font-size: clamp(20px, 2.5vw, 28px);
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+    }
+    @media (max-width: 700px) {
+      .mv-grid { grid-template-columns: 1fr; }
+    }
+
     /* ─── Footer ────────────────────────────────────────────── */
     footer {
       background: #0A0A0A;
@@ -1164,9 +1213,14 @@
 
   <!-- ── Hero ────────────────────────────────────────────── -->
   <section class="hero" id="hero">
-    <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="images/logo-50th-red.png">
-      <source src="images/hero-video.mp4" type="video/mp4" />
-    </video>
+    <div class="hero-yt-wrap">
+      <iframe class="hero-yt-iframe"
+        src="https://www.youtube.com/embed/ef0o6A70J6Y?autoplay=1&mute=1&loop=1&playlist=ef0o6A70J6Y&start=3&controls=0&rel=0&iv_load_policy=3&modestbranding=1&playsinline=1&vq=hd1080"
+        allow="autoplay; fullscreen; encrypted-media; accelerometer; gyroscope; picture-in-picture"
+        tabindex="-1"
+        aria-hidden="true"
+        title="Drytac hero background video"></iframe>
+    </div>
     <div class="hero-bg"></div>
     <div class="hero-grid"></div>
     <div class="hero-content">
@@ -1177,9 +1231,9 @@
         <img src="images/logo-era-3-adhesive-science.png" alt="Drytac Adhesive Science" class="hero-logo hero-logo-frame" data-frame="3" />
         <img src="images/logo-era-4-fine-art.png" alt="Drytac — The Fine Art of Finishing" class="hero-logo hero-logo-frame" data-frame="4" />
       </div>
-      <p class="hero-tagline" id="cms-hero-tagline">The Fine Art of Finishing</p>
+      <p class="hero-tagline" id="cms-hero-tagline">Adhesive Science</p>
       <h1 class="hero-headline">Fifty Years of<br><span>Innovation.</span></h1>
-      <p class="hero-sub" id="cms-hero-sub">From a kitchen table in Toronto to a globally recognized brand — the story of Drytac is one of vision, people, and relentless craft.</p>
+      <p class="hero-sub" id="cms-hero-sub">Built on innovation and driven by performance, Drytac has spent 50 years evolving from finished goods into a global manufacturer engineering high-performance materials through adhesive science.</p>
       <div class="hero-cta">
         <a href="#story" class="btn btn-primary">Our Story</a>
         <a href="#timeline" class="btn btn-outline">View Timeline</a>
@@ -1204,8 +1258,8 @@
           <div class="stat-label">Acquisitions Worldwide</div>
         </div>
         <div class="stat-item reveal reveal-delay-3">
-          <span class="stat-number">3</span>
-          <div class="stat-label">Global Regions</div>
+          <span class="stat-number">80+</span>
+          <div class="stat-label">Countries Served</div>
         </div>
         <div class="stat-item reveal reveal-delay-4">
           <span class="stat-number">1</span>
@@ -1224,13 +1278,13 @@
           <div class="section-tag reveal">50 Years in the Making</div>
           <h2 class="reveal reveal-delay-1" id="cms-story-heading">The material<br>behind the work.</h2>
           <p class="reveal reveal-delay-2" id="cms-story-p1">
-            Fifty years ago, Drytac started with a simple discovery: <strong>the material behind the work could be just as important as the work itself.</strong>
+            Fifty years ago, Drytac began with a simple realization: <strong>the material behind the work could be just as important as the work itself.</strong>
           </p>
           <p class="reveal reveal-delay-2" id="cms-story-p2">
             Richard Kelley was making table mats, coasters, and plaques when a local picture framer asked to buy a roll of the dry mounting tissue he was using. One roll became two — and the numbers spoke for themselves. The future wasn't in table mats. It was in helping others mount, finish, and protect their graphics.
           </p>
           <p class="reveal reveal-delay-3" id="cms-story-p3">
-            When it came time to build a brand that could stand on its own, the name came straight from the craft: <strong>Dry mounting + Tac (tacking it down) = Drytac.</strong> Registered the next morning. Still going strong 50 years later.
+            That pivot defined the business. Today, Drytac is a global manufacturer, engineering its own products and delivering reliable, high-performance solutions through adhesive science.
           </p>
         </div>
 
@@ -1263,31 +1317,34 @@
           <div class="section-tag reveal">Where the Name Came From</div>
           <h2 class="reveal reveal-delay-1" id="cms-origin-heading">A name born from the craft.</h2>
           <p class="reveal reveal-delay-2" id="cms-origin-p1">
-            Before the name Drytac existed, Richard Kelley ran a small business making table mats, coasters, and wall plaques under the name Lisle Industries — a play on his own name. To him it sounded like a large, impressive manufacturer. In reality, he was a one-person operation.
+            Before Drytac, the business operated as Lisle Industries — a one-person operation producing table mats and plaques.
           </p>
           <p class="reveal reveal-delay-2" id="cms-origin-p2">
-            One day, a local picture framer asked if he could buy a roll of the dry mounting tissue Kelley sourced from a UK supplier. A few days later, the framer ordered again. That quick repeat sale made Kelley realize he'd earned more from two rolls than he had in the previous month selling table mats.
+            As demand for dry mounting tissue grew, it became clear the future wasn't in finished products, but in supplying the materials behind them.
           </p>
           <p class="reveal reveal-delay-3" id="cms-origin-p3">
-            Sitting at his kitchen table late one night, faced with uncertainty about his supplier's future, he decided he needed control. Build his own brand. The name came together naturally:
+            The name reflects that foundation:
           </p>
 
           <div class="name-breakdown reveal reveal-delay-3">
             <div class="name-part">
               <div class="word">Dry</div>
-              <div class="meaning">Dry mounting tissue</div>
+              <div class="meaning">"Dry" from dry mounting</div>
             </div>
             <div class="name-equals">+</div>
             <div class="name-part">
               <div class="word">Tac</div>
-              <div class="meaning">Tacking process</div>
+              <div class="meaning">"Tac" from the tacking process</div>
             </div>
             <div class="name-equals">=</div>
             <div class="name-result">
               <div class="word">Drytac</div>
-              <div class="meaning">Registered the next morning</div>
             </div>
           </div>
+
+          <p class="reveal reveal-delay-4" style="font-size:15px; color:var(--mid); margin-top:8px;">
+            Registered the next day, Drytac marked the beginning of a brand built on materials, performance, and long-term growth.
+          </p>
 
         </div>
       </div>
@@ -1315,9 +1372,18 @@
 
         <div class="logo-era">
           <div class="logo-era-img-wrap">
-            <img src="images/logo-era-2-coating-experts.png" alt="Drytac Adhesive Coating Experts logo" loading="lazy" />
+            <img src="images/logo-era-4-fine-art.png" alt="Drytac — The Fine Art of Finishing" loading="lazy" />
           </div>
           <div class="logo-era-year">Era II</div>
+          <div class="logo-era-title">The Fine Art of Finishing</div>
+          <div class="logo-era-desc">A refined identity as Drytac establishes its reputation for quality and precision finishing.</div>
+        </div>
+
+        <div class="logo-era">
+          <div class="logo-era-img-wrap">
+            <img src="images/logo-era-2-coating-experts.png" alt="Drytac Adhesive Coating Experts logo" loading="lazy" />
+          </div>
+          <div class="logo-era-year">Era III</div>
           <div class="logo-era-title">Adhesive Coating Experts</div>
           <div class="logo-era-desc">A bold, unified red wordmark as Drytac expands into coating at scale.</div>
         </div>
@@ -1326,18 +1392,9 @@
           <div class="logo-era-img-wrap">
             <img src="images/logo-era-3-adhesive-science.png" alt="Drytac Adhesive Science logo" loading="lazy" />
           </div>
-          <div class="logo-era-year">Era III</div>
-          <div class="logo-era-title">Adhesive Science</div>
-          <div class="logo-era-desc">Refined wordmark as Drytac leans into the science and engineering behind every product.</div>
-        </div>
-
-        <div class="logo-era">
-          <div class="logo-era-img-wrap">
-            <img src="images/logo-era-4-fine-art.png" alt="Drytac — The Fine Art of Finishing" loading="lazy" />
-          </div>
           <div class="logo-era-year">Today</div>
-          <div class="logo-era-title">The Fine Art of Finishing</div>
-          <div class="logo-era-desc">A modern identity balancing heritage red with the precision of a global brand.</div>
+          <div class="logo-era-title">Adhesive Science</div>
+          <div class="logo-era-desc">A modern identity reflecting the science and engineering behind every high-performance product.</div>
         </div>
       </div>
     </div>
@@ -1407,44 +1464,47 @@
       <div class="values-inner">
         <span class="quote-mark reveal">"</span>
         <blockquote class="reveal reveal-delay-1">
-          If I am asked what truly built Drytac, my answer remains the same: <em>people and values.</em> A strong, marketable product is essential — it is the foundation. Yet products alone do not sustain a business for half a century.
+          Drytac has been built on more than products — it's been built on <em>people and principles.</em>
         </blockquote>
-        <div class="quote-attribution reveal reveal-delay-2">
-          <div class="quote-line"></div>
-          <div>
-            <div class="quote-author">Richard Kelley</div>
-            <div class="quote-title">Founder, Drytac Corporation</div>
-          </div>
-        </div>
+        <p class="reveal reveal-delay-2" style="font-size:16px; color:rgba(255,255,255,0.5); max-width:700px; line-height:1.7; margin-top:8px;">
+          These values continue to guide how we innovate, operate, and deliver for our customers around the world.
+        </p>
 
         <div class="values-pillars">
           <div class="pillar reveal reveal-delay-1">
             <div class="pillar-icon">
-              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg>
             </div>
-            <h4>Integrity</h4>
-            <p>Honoring commitments. Standing behind every product we make.</p>
+            <h4>Creativity</h4>
+            <p>Finding new solutions and pushing the boundaries of what materials can do.</p>
           </div>
           <div class="pillar reveal reveal-delay-2">
             <div class="pillar-icon">
-              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z"/></svg>
             </div>
-            <h4>Hard Work</h4>
-            <p>From a kitchen table to a global brand — built one day at a time.</p>
+            <h4>Adaptability</h4>
+            <p>Evolving with the market, from finished goods to high-performance materials.</p>
           </div>
           <div class="pillar reveal reveal-delay-3">
             <div class="pillar-icon">
               <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
-            <h4>People</h4>
-            <p>People build culture. People earn trust. That's what sustains a legacy.</p>
+            <h4>Collaboration</h4>
+            <p>Working together across teams, regions, and customer partnerships.</p>
           </div>
           <div class="pillar reveal reveal-delay-4">
             <div class="pillar-icon">
               <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
             </div>
-            <h4>Excellence</h4>
-            <p>Consistently delivering — and when possible, exceeding expectations.</p>
+            <h4>Ambition</h4>
+            <p>Driving growth, innovation, and global leadership in adhesive science.</p>
+          </div>
+          <div class="pillar reveal reveal-delay-4">
+            <div class="pillar-icon">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <h4>Respect</h4>
+            <p>For our people, our customers, and the craft behind every product we make.</p>
           </div>
         </div>
       </div>
@@ -1457,7 +1517,7 @@
       <div class="timeline-header">
         <div class="section-tag reveal" style="justify-content:center;">Five Decades of Growth</div>
         <h2 class="reveal reveal-delay-1">Building a Global Legacy</h2>
-        <p class="reveal reveal-delay-2">From a single suburb in Toronto to operations spanning three continents.</p>
+        <p class="reveal reveal-delay-2">From a single operation in Toronto to a global manufacturing business, Drytac has grown through innovation, strategic expansion, and a clear focus on performance. Today, we design, coat, and convert our own materials — bringing adhesive science to applications across windows, walls, floors, and beyond.</p>
       </div>
 
       <div class="timeline">
@@ -1579,14 +1639,29 @@
     <div class="container">
       <div class="section-tag reveal" style="justify-content:center; color: rgba(193,18,31,0.8);">Global Reach</div>
       <h2 class="reveal reveal-delay-1">From Toronto to the World</h2>
-      <p class="reveal reveal-delay-2">What began in a suburb of Canada now reaches sign-makers, print professionals, and finishers across the globe.</p>
-      <div class="offices-grid reveal reveal-delay-3">
-        <span class="office-tag">Toronto, Canada</span>
-        <span class="office-tag">Bristol, UK</span>
-        <span class="office-tag">United States</span>
-        <span class="office-tag">Germany</span>
-        <span class="office-tag">Asia Pacific</span>
-        <span class="office-tag">Latin America</span>
+      <p class="reveal reveal-delay-2">Growth at Drytac has never been about scale alone.</p>
+      <p class="reveal reveal-delay-3" style="font-size:16px; color:rgba(255,255,255,0.45); max-width:560px; margin:0 auto; line-height:1.75;">
+        It's about building capability, maintaining consistency, and delivering materials that perform in real-world environments — every time.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Mission & Vision ─────────────────────────────────── -->
+  <section class="mission-vision">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:64px;">
+        <div class="section-tag reveal" style="justify-content:center;">Who We Are</div>
+        <h2 class="reveal reveal-delay-1" style="font-size:clamp(32px,4vw,52px);">Purpose &amp; Direction</h2>
+      </div>
+      <div class="mv-grid">
+        <div class="mv-block reveal">
+          <div class="section-tag">Mission</div>
+          <h3>Delivering solutions through adhesive science</h3>
+        </div>
+        <div class="mv-block reveal reveal-delay-2">
+          <div class="section-tag">Vision</div>
+          <h3>To be the fastest growing and most innovative coating company in the world</h3>
+        </div>
       </div>
     </div>
   </section>
@@ -1595,7 +1670,7 @@
   <footer>
     <div class="footer-inner">
       <img src="images/logo-white.png" alt="Drytac" class="footer-logo" />
-      <p class="footer-tagline">The Fine Art of Finishing</p>
+      <p class="footer-tagline">Adhesive Science</p>
       <div class="footer-divider"></div>
       <ul class="footer-links">
         <li><a href="https://www.drytac.com" target="_blank">drytac.com</a></li>
